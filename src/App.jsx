@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import './App.css';
+import katheImage from "./assets/kathe.jpeg"
+import ishaanImage from "./assets/ishaan.jpeg"
+const images = [ishaanImage, katheImage];
+
 
 function App() {
   const [headCount, setHeadCount] = useState(0);
   const [tailCount, setTailCount] = useState(0);
-  const [src, setSrc] = useState("/src/assets/rahul.jpg");
+  const [src, setSrc] = useState(images[0]);
   const [isFlipping, setIsFlipping] = useState(false);
   const flipSound = new Audio('/src/assets/flip.wav');
 
@@ -13,8 +17,6 @@ function App() {
 
     setIsFlipping(true);
     flipSound.play();
-
-    const images = ["/src/assets/ishaan.jpeg", "/src/assets/kathe.jpg"];
     let i = 0;
 
     const flipInterval = setInterval(() => {
@@ -28,10 +30,10 @@ function App() {
       const num = Math.random();
       if (num > 0.5) {
         setHeadCount(prev => prev + 1);
-        setSrc("/src/assets/ishaan.jpeg");
+        setSrc(ishaanImage);
       } else {
         setTailCount(prev => prev + 1);
-        setSrc("/src/assets/kathe.jpeg");
+        setSrc(katheImage);
       }
 
       setIsFlipping(false);
