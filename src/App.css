@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+.flip-animation {
+  animation: flip 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+@keyframes flip {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(1440deg);
+  }
+}
