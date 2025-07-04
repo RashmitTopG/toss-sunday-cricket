@@ -4,83 +4,92 @@ import './App.css';
 function App() {
   const [headCount, setHeadCount] = useState(0);
   const [tailCount, setTailCount] = useState(0);
-  const [src, setSrc] = useState("/src/assets/rahul.jpg"); // No image initially
-  const [isFlipping, setIsFlipping] = useState(false); // New state for animation
+  const [src, setSrc] = useState("/src/assets/rahul.jpg");
+  const [isFlipping, setIsFlipping] = useState(false);
+  const flipSound = new Audio('/src/assets/flip.wav');
 
   const toss = () => {
-    if (isFlipping) return; // Prevent multiple clicks
-  
+    if (isFlipping) return;
+
     setIsFlipping(true);
-  
-    // Start alternating image
-    const images = ["/src/assets/rahul.jpg", "/src/assets/priya.jpg"];
+    flipSound.play();
+
+    const images = ["/src/assets/ishaan.jpeg", "/src/assets/kathe.jpg"];
     let i = 0;
-  
+
     const flipInterval = setInterval(() => {
       setSrc(images[i % 2]);
       i++;
-    }, 100); // alternate every 100ms
-  
-    // After 1.5s, stop alternating and show actual result
+    }, 100);
+
     setTimeout(() => {
-      clearInterval(flipInterval); // stop flipping
-  
+      clearInterval(flipInterval);
+
       const num = Math.random();
       if (num > 0.5) {
-        setHeadCount(headCount + 1);
-        setSrc("/src/assets/rahul.jpg");
+        setHeadCount(prev => prev + 1);
+        setSrc("/src/assets/ishaan.jpeg");
       } else {
-        setTailCount(tailCount + 1);
-        setSrc("/src/assets/priya.jpg");
+        setTailCount(prev => prev + 1);
+        setSrc("/src/assets/kathe.jpeg");
       }
-  
+
       setIsFlipping(false);
-    }, 1500); // match your animation duration
+    }, 1500);
   };
-  
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-200 flex flex-col items-center justify-center px-4">
-      <div className="text-blue-600 text-center mb-6">
-        <p className="text-5xl font-bold">🎲 Toss App</p>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-[#dbeafe] via-purple-100 to-pink-100 px-4 ">
+      <h1 className="text-[2rem] sm:text-7xl font-extrabold text-indigo-700 pb-6 drop-shadow-md text-center">
+        🎲 Toss Simulator 🎲
+      </h1>
+      <p className="text-2xl sm:text-4xl text-gray-700  pb-q mb-2 text-center">Heads or Tails</p>
+      <p className="text-md sm:text-lg text-gray-600 mb-8 text-center">
+        Flip a coin and test your luck!
+      </p>
+
+      <div className="flex gap-10 sm:gap-20 mb-8">
+        <div className="text-center">
+          <p className="text-base sm:text-lg text-gray-700">Heads</p>
+          <p className="text-2xl sm:text-3xl font-bold text-indigo-700">{headCount}</p>
+        </div>
+        <div className="text-center">
+          <p className="text-base sm:text-lg text-gray-700">Tails</p>
+          <p className="text-2xl sm:text-3xl font-bold text-pink-700">{tailCount}</p>
+        </div>
       </div>
 
-      <div className="text-3xl text-gray-800 mb-2">
-        HEADS OR TAILS
-      </div>
-
-      <div className="text-lg text-gray-600 mb-4">
-        Flip a coin to get the result
-      </div>
-
-      <div className="flex justify-center items-center gap-10 text-lg font-medium mb-6">
-        <p className="text-blue-700">
-          Heads: <span className="font-bold">{headCount}</span>
-        </p>
-        <p className="text-purple-700">
-          Tails: <span className="font-bold">{tailCount}</span>
-        </p>
-      </div>
-
-      <div className="bg-white h-[200px] w-[200px] rounded-full flex items-center justify-center shadow-lg mb-6 overflow-hidden text-4xl font-bold text-gray-400">
+      <div
+        className={`relative w-40 h-40 sm:w-52 sm:h-52 rounded-full border-8 border-red-100 shadow-2xl overflow-hidden mb-8 bg-gradient-to-br from-indigo-100 to-purple-100 ${
+          isFlipping ? 'animate-spin-slow' : ''
+        }`}
+      >
         {src ? (
           <img
             src={src}
-            alt="Coin result"
-            className={`h-full w-full object-cover rounded-full ${isFlipping ? "flip-animation" : ""}`}
+            alt="Coin"
+            className="h-full w-full object-cover rounded-full"
           />
         ) : (
-          "?"
+          <div className="h-full w-full flex items-center justify-center text-5xl sm:text-6xl text-gray-400">?</div>
         )}
       </div>
 
       <button
-        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full shadow-lg transition duration-300 text-lg"
         onClick={toss}
-        disabled={isFlipping} // Disable button during flip
+        disabled={isFlipping}
+        className={`px-6 sm:px-8 py-3 rounded-full text-base sm:text-lg font-semibold transition duration-300 shadow-md ${
+          isFlipping
+            ? 'bg-gray-400 cursor-not-allowed text-gray-100'
+            : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+        }`}
       >
-        {isFlipping ? "Flipping..." : "Flip The Coin"}
+        {isFlipping ? 'Flipping...' : 'Flip The Coin'}
       </button>
+
+      <footer className="mt-10 text-sm text-gray-500">
+        Made with ❤️ RashmitTopG
+      </footer>
     </div>
   );
 }

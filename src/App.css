@@ -1,14 +1,11 @@
 @import "tailwindcss";
 
-.flip-animation {
-  animation: flip 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-}
-
-@keyframes flip {
-  0% {
-    transform: rotateX(0deg);
+@keyframes spin-slow {
+    from { transform: rotateX(0deg); }
+    to { transform: rotateX(720deg); }
   }
-  100% {
-    transform: rotateX(1440deg);
+  
+  .animate-spin-slow {
+    animation: spin-slow 0.5s linear infinite;
   }
-}
+  
