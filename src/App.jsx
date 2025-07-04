@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './App.css';
 import katheImage from "./assets/kathe.jpeg"
 import ishaanImage from "./assets/ishaan.jpeg"
+import sound from "/src/assets/flip.wav"
 const images = [ishaanImage, katheImage];
 
 
@@ -10,7 +11,7 @@ function App() {
   const [tailCount, setTailCount] = useState(0);
   const [src, setSrc] = useState(images[0]);
   const [isFlipping, setIsFlipping] = useState(false);
-  const flipSound = new Audio('/src/assets/flip.wav');
+  const flipSound = new Audio(sound);
 
   const toss = () => {
     if (isFlipping) return;
